@@ -90,7 +90,8 @@ d3.csv("data/colleges.csv", function(param_data) {
     function dynamic_selection() {
         var select = d3.select("#dropdown")
             .append("select")
-            .attr("id", "colleges");
+            .attr("id", "colleges")
+            .attr("class", "select");
 
         select.selectAll("option")
             .data(param_data)

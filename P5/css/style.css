@@ -7,20 +7,21 @@ body {
 }
 
 .container {
-    width: 100%;
-    margin: auto;
-    position: relative;
+    /*position: relative;*/
 }
 
 #dropdown {
     float: left;
-    padding: 10px;
+    top: 0;
+    padding: 20px;
+    position: absolute;
 }
 
 #basic_info {
     clear: left;
-    padding: 10px;
+    padding: 40px;
     width: 50%;
+    margin-top: 4%;
 }
 
 .arc text {
@@ -49,6 +50,49 @@ body {
 
 #chart {
     width: 100%;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+#dropdown:after {
+    content: '‹›';
+    color: pink;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 35px;
+
+    top: 37px;
+    padding: 0 0 2px;
+    border-bottom: 1px solid #999;
+    line-height: 14px;
+
+    position: absolute;
+    pointer-events: none;
+}
+
+#dropdown select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    height: 40px;
+    float: right;
+    margin: 5px 0px;
+    padding: 0px 24px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #333;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
 }
 
 
