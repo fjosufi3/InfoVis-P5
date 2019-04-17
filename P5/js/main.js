@@ -4,6 +4,11 @@
 
 d3.csv("data/colleges.csv", function(param_data) {
 
+    /*
+     * Fill in basic info (control, region, locale, admission rate, act, sat, undergraduate population)
+     *
+     * @param index corresponding to the dropdown selection
+     */
     function create_basic_info(index) {
         d3.select("#control").text(param_data[index]["Control"]);
         d3.select("#region").text(param_data[index]["Region"]);
@@ -14,6 +19,11 @@ d3.csv("data/colleges.csv", function(param_data) {
         d3.select("#undergrad").text(param_data[index]["Undergrad Population"]);
     }
 
+    /*
+     * Create third pie chart (student status)
+     *
+     * @param index corresponding to the dropdown selection
+     */
     function create_pie_chart_1(index) {
         var percent_part_time = Math.round(+param_data[index]["% Part-time Undergrads"] * 100);
         var percent_full_time = 100 - percent_part_time;
@@ -32,6 +42,11 @@ d3.csv("data/colleges.csv", function(param_data) {
         }
     }
 
+    /*
+     * Create third pie chart (employment rate)
+     *
+     * @param index corresponding to the dropdown selection
+     */
     function create_pie_chart_2(index) {
         var num_unemployed = +param_data[index]["Number of Unemployed 8 years after entry"],
             num_employed = +param_data[index]["Number of Employed 8 years after entry"];
@@ -57,6 +72,11 @@ d3.csv("data/colleges.csv", function(param_data) {
         }
     }
 
+    /*
+     * Create third pie chart (ethnicity dist.)
+     *
+     * @param index corresponding to the dropdown selection
+     */
     function create_pie_chart_3(index) {
         var white = +(param_data[index]["% White"] * 100).toFixed(2),
             black = +(param_data[index]["% Black"] * 100).toFixed(2),
@@ -80,6 +100,9 @@ d3.csv("data/colleges.csv", function(param_data) {
         show("#pie3")
     }
 
+    /*
+     * Initialize visualization based on first dropdown (default)
+     */
     function init() {
         create_basic_info(0);
         create_pie_chart_1(0);
@@ -87,6 +110,9 @@ d3.csv("data/colleges.csv", function(param_data) {
         create_pie_chart_3(0);
     }
 
+    /*
+     * Add select and handle changes in dropdown
+     */
     function dynamic_selection() {
         var select = d3.select("#dropdown")
             .append("select")
@@ -113,6 +139,15 @@ d3.csv("data/colleges.csv", function(param_data) {
             });
     }
 
+    /*
+     * Generic pie chart creation
+     *
+     * @param chart pass in a div id corresponding to the type of chart(s)
+     * @param param_data the object data passed in
+     * @param id id for the specific chart being created (ex. #pie1 for first pie chart)
+     * @param colors for the pie chart
+     * @title title of the chart, displayed on the right
+     */
     function create_pie(chart, param_data, id, colors, title) {
         var margin = {top: 20, right: 45, bottom: 20, left: 80};
 
@@ -181,6 +216,9 @@ d3.csv("data/colleges.csv", function(param_data) {
 
     }
 
+    /*
+     * Animation to hide charts
+     */
     function hide(id) {
         d3.select(id)
             .transition()
@@ -189,6 +227,9 @@ d3.csv("data/colleges.csv", function(param_data) {
             .duration(500);
     }
 
+    /*
+     * Animation to display charts
+     */
     function show(id) {
         d3.select(id)
             .transition()
@@ -197,6 +238,8 @@ d3.csv("data/colleges.csv", function(param_data) {
             .duration(500);
     }
 
+    // Functions called to initiate vis, init displays the default vis and dynamic selection controls
+    // updating the charts based on different selections
     init();
     dynamic_selection();
 });
