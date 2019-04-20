@@ -1,9 +1,56 @@
 /**
- * Created by Josufi on 4/15/19.
+ * Created by Josufi and Wang on 4/15/19.
  */
+
 
 d3.csv("data/colleges.csv", function(param_data) {
 
+    var mapWidth = 1000;
+    var mapHeight = 800;
+    var projection = d3.geoAlbersUsa()
+        .translate([mapWidth/2, mapHeight/2])
+        .scale([1400]);
+    var path = d3.geoPath()
+        .projection(projection);
+
+    var svg = d3.select("#map")
+        .append("svg")
+        .attr("width", mapWidth)
+        .attr("height", mapHeight)
+        .style("float", "left");
+
+    var g = svg.append("g");
+
+    d3.json("../data/us-states.json", function(json) {
+      g.selectAll("path")
+          .data(json.features)
+          .enter().append("path")
+            .attr("d", path)
+          .style("stroke", "fff")
+          .style("stroke-width","1")
+          .style("fill", "rgb(24,50,100)");
+    })
+    var count = 0;
+    svg.selectAll("circle")
+      .data(param_data)
+      .enter()
+      .append("circle")
+      .attr("cx", function (d) {
+        if (projection([d.longitude, d.latitude])) {
+          return projection([d.longitude, d.latitude])[0];
+        } else {
+          console.log(d.Name);
+          count++;
+        }
+      })
+      .attr("cy", function (d) {
+        if (projection([d.longitude, d.latitude])) {
+          return projection([d.longitude, d.latitude])[1];
+        }
+      })
+      .attr("r", 2)
+      .style("fill", "rgb(150,150,105)");
+    console.log(count);
     /*
      * Fill in basic info (control, region, locale, admission rate, act, sat, undergraduate population)
      *
