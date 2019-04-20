@@ -21,14 +21,14 @@ d3.csv("data/colleges.csv", function(param_data) {
 
     var g = svg.append("g");
 
-    d3.json("../data/us-states.json", function(json) {
+    d3.json("data/us-states.json", function(json) {
       g.selectAll("path")
           .data(json.features)
           .enter().append("path")
             .attr("d", path)
           .style("stroke", "fff")
           .style("stroke-width","1")
-          .style("fill", "rgb(24,50,100)");
+          .style("fill", "#a1d99b");
     })
     var count = 0;
     svg.selectAll("circle")
@@ -49,7 +49,7 @@ d3.csv("data/colleges.csv", function(param_data) {
         }
       })
       .attr("r", 2)
-      .style("fill", "rgb(150,150,105)");
+      .style("fill", "#43a2ca");
     console.log(count);
     /*
      * Fill in basic info (control, region, locale, admission rate, act, sat, undergraduate population)
