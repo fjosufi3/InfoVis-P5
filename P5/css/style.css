@@ -108,3 +108,11 @@ select::-ms-expand {
     -ms-word-break: normal;
     word-break: normal;
 }
+
+#map:hover {
+    cursor: grab;
+}
+
+#map:active {
+    cursor: grabbing;
+}
