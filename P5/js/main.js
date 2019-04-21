@@ -309,16 +309,6 @@ d3.csv("data/colleges.csv", function(param_data) {
     }
 
     /*
-     * Initialize visualization based on first dropdown (default)
-     */
-    function init() {
-        create_basic_info(0);
-        create_pie_chart_1(0);
-        create_pie_chart_2(0);
-        create_pie_chart_3(0);
-    }
-
-    /*
      * Add select and handle changes in dropdown
      */
     function dynamic_selection() {
@@ -351,6 +341,12 @@ d3.csv("data/colleges.csv", function(param_data) {
                 create_pie_chart_1(value);
                 create_pie_chart_2(value);
                 create_pie_chart_3(value);
+
+                d3.select(".charts")
+                    .style("display", "block");
+
+                window.scrollTo(0,document.body.scrollHeight);
+
             });
     }
 
@@ -377,7 +373,7 @@ d3.csv("data/colleges.csv", function(param_data) {
 
         var width = 300,
             height = 300,
-            radius = 100;
+            radius = 120;
 
         var color = d3.scaleOrdinal()
             .range(colors);
@@ -454,7 +450,7 @@ d3.csv("data/colleges.csv", function(param_data) {
 
     // Functions called to initiate vis, init displays the default vis and dynamic selection controls
     // updating the charts based on different selections
-    init();
+    //init();
     dynamic_selection();
     load_map();
 });

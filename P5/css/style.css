@@ -4,7 +4,7 @@
 }
 
 html {
-    background-color: #eeeeee;
+    background-color: white;
 }
 
 body {
@@ -15,6 +15,7 @@ body {
 .charts {
     background: white;
     position: relative;
+    display: none;
 }
 
 #top {
@@ -22,7 +23,6 @@ body {
     width: 100%;
     position: relative;
 }
-
 
 #dropdown {
     margin-top: -20%;
@@ -155,12 +155,13 @@ button:hover {
 }
 
 #right {
-  -webkit-box-shadow: -5px 0px 5px 0px rgba(219,219,219,1);
-  -moz-box-shadow: -5px 0px 5px 0px rgba(219,219,219,1);
-  box-shadow: -5px 0px 5px 0px rgba(219,219,219,1);
+  -webkit-box-shadow: -2px 0px 2px 0px rgba(170,170,170,1);
+  -moz-box-shadow: -2px 0px 2px 0px rgba(170,170,170,1);
+  box-shadow: -2px 0px 2px 0px rgba(170,170,170,1);
   display: inline-grid;
   padding-left: 2em;
   height: 800px;
+  background: white;
 }
 
 button:focus { outline:0; }
