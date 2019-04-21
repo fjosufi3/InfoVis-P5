@@ -40,9 +40,9 @@ d3.csv("data/colleges.csv", function(param_data) {
         //     (geoPathGroupBounds.bottom < this.height ? geoPathGroupBounds.bottom : this.height),
         // ];
 
-        var brush = d3.brush()
-            .extent([[0, 0], [mapWidth, mapHeight]])
-            .on("start", clear)
+        // var brush = d3.brush()
+        //     .extent([[0, 0], [mapWidth, mapHeight]])
+        //     .on("start", clear)
             // .on("end", brushend);
 
         // var dx,
@@ -80,8 +80,8 @@ d3.csv("data/colleges.csv", function(param_data) {
                 .style("fill", "#a1d99b");
 
 
-            d3.select("g")
-              .call(brush)
+            // d3.select("g")
+            //   .call(brush)
 
             g.selectAll("circle")
                 .data(param_data)
@@ -99,10 +99,17 @@ d3.csv("data/colleges.csv", function(param_data) {
                     }
                 })
                 .attr("r", 1)
-                .style("fill", "#43a2ca")
+                .classed("circ", true)
+                // .style("fill", "#43a2ca")
                 .on("click", function(d, i) {
-                  console.log(d);
-                  console.log(i);
+                  d3.selectAll("circle")
+                    .classed("selected", function(c, j) {
+                      // console.log(c)
+                      console.log(c)
+                      return j == i;
+                    })
+                  // console.log(d);
+                  // console.log(i);
                   center = {
                     x: projection([d.longitude, d.latitude])[0],
                     y:projection([d.longitude, d.latitude])[1]
@@ -135,8 +142,13 @@ d3.csv("data/colleges.csv", function(param_data) {
         });
 
 
-
         svg.call(zoom);
+
+        // svg.on("dblclick.zoom", function() {
+        //     svg.transition()
+        //         .duration(750)
+        //         .call( zoom.transform, d3.zoomIdentity);
+        // })
 
 
         // function brushend() {
@@ -169,9 +181,9 @@ d3.csv("data/colleges.csv", function(param_data) {
         //
         //
         // }
-
-        console.log(currMapScale);
-        console.log(currMapTrans);
+        //
+        // console.log(currMapScale);
+        // console.log(currMapTrans);
 
         function clear() {
           svg.transition()
@@ -179,10 +191,14 @@ d3.csv("data/colleges.csv", function(param_data) {
               // .call( zoom.transform, d3.zoomIdentity );
         }
 
+        d3.select("#reset").on("click", function() {
+          svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+        });
+
         function zoomed() {
             // console.log(d3.event.transform);
-              currMapScale = d3.event.transform.k;
-              console.log(currMapScale);
+              // currMapScale = d3.event.transform.k;
+              // console.log(currMapScale);
               g
                   .selectAll('path') // To prevent stroke width from scaling
                   .attr('transform', d3.event.transform)
@@ -190,9 +206,9 @@ d3.csv("data/colleges.csv", function(param_data) {
                   .selectAll('circle')
                   .attr('transform', d3.event.transform);
 
-              g
-                  .selectAll(".brush")
-                  .attr('transform', d3.event.transform);
+              // g
+              //     .selectAll(".brush")
+              //     .attr('transform', d3.event.transform);
         }
     }
 
@@ -310,6 +326,13 @@ d3.csv("data/colleges.csv", function(param_data) {
             .append("select")
             .attr("id", "colleges")
             .attr("class", "select");
+
+        d3.select("select")
+            .append("option")
+            .attr("value", "")
+            .attr("disabled", true)
+            .attr("selected", true)
+            .text("Please Select a College")
 
         select.selectAll("option")
             .data(param_data)
