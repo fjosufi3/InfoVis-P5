@@ -35,7 +35,7 @@ d3.csv("data/colleges.csv", function(param_data) {
         var brush = d3.brush()
             .extent([[0, 0], [mapWidth, mapHeight]])
             .on("start", clear)
-            .on("end", brushend);
+            // .on("end", brushend);
 
         var dx,
             dy,
@@ -53,6 +53,7 @@ d3.csv("data/colleges.csv", function(param_data) {
 
 
         d3.select("body").on("keydown", function () {
+            d3.select(".brush").style('opacity', 0);
             zooming = d3.event.ctrlKey || d3.event.metaKey;
         });
 
@@ -69,6 +70,10 @@ d3.csv("data/colleges.csv", function(param_data) {
                 .style("stroke", "fff")
                 .style("stroke-width","1")
                 .style("fill", "#a1d99b");
+
+
+            d3.select("g")
+              .call(brush)
 
             g.selectAll("circle")
                 .data(param_data)
@@ -87,9 +92,6 @@ d3.csv("data/colleges.csv", function(param_data) {
                 .attr("r", 1)
                 .style("fill", "#43a2ca");
 
-                svg.append("g")
-                  .attr("class", "brush")
-                  .call(brush)
 
             // var svgBounds = svg.node().getBoundingClientRect();
             // var geoPathGroupBounds = g.node().getBoundingClientRect();
@@ -117,36 +119,39 @@ d3.csv("data/colleges.csv", function(param_data) {
         // svg.call(zoom);
 
 
-        function brushend() {
-          var s = d3.event.selection,
-              dx = s[1][0] - s[0][0],
-              dy = s[1][1] - s[0][1],
-              x = (s[0][0] + s[1][0]) / 2,
-              y = (s[0][1] + s[1][1]) / 2;
-          // console.log(s);
-          // console.log(dx);
-          // console.log(dy);
-          // console.log(x);
-          // console.log(y);
+        // function brushend() {
+        //   var s = d3.event.selection,
+        //       dx = s[1][0] - s[0][0],
+        //       dy = s[1][1] - s[0][1],
+        //       x = (s[0][0] + s[1][0]) / 2,
+        //       y = (s[0][1] + s[1][1]) / 2;
+        //   // console.log(s);
+        //   // console.log(dx);
+        //   // console.log(dy);
+        //   // console.log(x);
+        //   // console.log(y);
+        //
+        //   console.log(currMapScale);
+        //   console.log(currMapTrans);
+        //
+        //   currMapScale = Math.max(1, Math.min(40, 0.9 / Math.max(dx / mapWidth, dy / mapHeight)));
+        //   currMapTrans = [(mapWidth / 2) - (currMapScale * x), (mapHeight / 2) - (currMapScale * y)];
+        //
+        //   console.log(currMapScale);
+        //   console.log(currMapTrans);
+        //
+        //   svg.transition()
+        //       .duration(750)
+        //       .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
+        //
+        //   svg.select(".brush")
+        //       .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
+        //
+        //
+        // }
 
-          console.log(currMapScale);
-          console.log(currMapTrans);
-
-          currMapScale = Math.max(1, Math.min(40, 0.9 / Math.max(dx / mapWidth, dy / mapHeight)));
-          currMapTrans = [(mapWidth / 2) - (currMapScale * x), (mapHeight / 2) - (currMapScale * y)];
-
-          console.log(currMapScale);
-          console.log(currMapTrans);
-
-          svg.transition()
-              .duration(750)
-              .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
-
-          svg.select(".brush")
-              .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
-
-
-        }
+        console.log(currMapScale);
+        console.log(currMapTrans);
 
         function clear() {
           svg.transition()
@@ -157,8 +162,8 @@ d3.csv("data/colleges.csv", function(param_data) {
 
         function zoomed() {
             // console.log(d3.event.transform);
-
-
+              currMapScale = d3.event.transform.k;
+              console.log(currMapScale);
               g
                   .selectAll('path') // To prevent stroke width from scaling
                   .attr('transform', d3.event.transform)
@@ -166,6 +171,9 @@ d3.csv("data/colleges.csv", function(param_data) {
                   .selectAll('circle')
                   .attr('transform', d3.event.transform);
 
+              g
+                  .selectAll(".brush")
+                  .attr('transform', d3.event.transform);
         }
     }
 
