@@ -3,6 +3,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+h1 {
+    text-align: center;
+}
+
 html {
     background-color: white;
 }
