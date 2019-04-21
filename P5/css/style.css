@@ -9,9 +9,11 @@ html {
 
 body {
     font-family: "Avenir Next", "Helvetica", "sans-serif";
+    margin: 0;
 }
 
 .charts {
+    background: white;
     position: relative;
 }
 
@@ -23,17 +25,18 @@ body {
 
 
 #dropdown {
+    margin-top: -20%;
     float: right;
-    padding: 20px;
+    padding-right: 40px;
     /* position: absolute; */
-    margin-top:10%;
+    /* margin-top:10%; */
 }
 
 #basic_info {
     float: right;
     padding-right: 45px;
     /* position: absolute; */
-    margin-top:2%;
+    margin-top:-70%;
 }
 
 .arc text {
@@ -68,8 +71,8 @@ select::-ms-expand {
     display: none;
 }
 
-#dropdown:after {
-    margin-top: 10%;
+/* #dropdown:after {
+    margin-top: 12.75%;
     content: '<>';
     font-size: 10px;
     font-weight: bold;
@@ -78,7 +81,7 @@ select::-ms-expand {
     -moz-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
-    right: 35px;
+    right: 50px;
 
     top: 37px;
     padding: 0 0 2px;
@@ -87,7 +90,7 @@ select::-ms-expand {
 
     position: absolute;
     pointer-events: none;
-}
+} */
 
 #dropdown select {
     -webkit-appearance: none;
@@ -140,6 +143,28 @@ button:hover {
     background: rgba(255,255,255, 1.0);
     cursor: pointer;
 }
+
+#top {
+  border: 1px solid #cbcdcc;
+}
+
+#left {
+  display: inline-grid;
+  float: left;
+  background: #e8e8e8;
+}
+
+#right {
+  -webkit-box-shadow: -5px 0px 5px 0px rgba(219,219,219,1);
+  -moz-box-shadow: -5px 0px 5px 0px rgba(219,219,219,1);
+  box-shadow: -5px 0px 5px 0px rgba(219,219,219,1);
+  display: inline-grid;
+  padding-left: 2em;
+  height: 800px;
+}
+
+button:focus { outline:0; }
+select:focus { outline: 0; }
 
 /* #map:hover {*/
 /*    cursor: grab;*/

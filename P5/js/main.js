@@ -9,7 +9,7 @@ d3.csv("data/colleges.csv", function(param_data) {
      * Load the map of the United States with colleges as points
      */
     function load_map() {
-        var mapWidth = 1000;
+        var mapWidth = 1050;
         var mapHeight = 800;
         var zooming = false;
         var projection = d3.geoAlbersUsa()
@@ -425,8 +425,7 @@ d3.csv("data/colleges.csv", function(param_data) {
         });
 
         path.on('mousemove', function(d) {
-            tooltip.style('top', (d3.event.pageY + 10) + 'px')
-                .style('left', (d3.event.pageX + 10) + 'px');
+            tooltip.style('left', (d3.event.pageX + 10) + 'px');
         });
 
     }
