@@ -119,6 +119,8 @@ d3.csv("data/colleges.csv", function(param_data) {
                     s1 = center.x - 1;
                     s2 = center.x + 1;
                     transform = bbox(mapWidth, mapHeight, center);
+                    d3.select("#pin")
+                      .classed("pin-s", true)
                     return svg.transition().duration(2000).call(zoom.transform, transform);
                 });
 
@@ -396,7 +398,9 @@ d3.csv("data/colleges.csv", function(param_data) {
                 }
 
                 d3.select("#map svg").transition().duration(2000).call(zoom.transform, transform);
-
+                d3.select("#pin")
+                  .classed("pin-s", true)
+                  
                 setTimeout(function() {window.scrollTo(0,document.body.scrollHeight);}, 3000)
 
 

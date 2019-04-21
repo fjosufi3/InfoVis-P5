@@ -5,6 +5,7 @@
 
 h1 {
     text-align: center;
+    margin-top: 1em;
 }
 
 html {
@@ -17,8 +18,15 @@ body {
 }
 
 #pin {
-    width: 50px;
-    height: 50px;
+    margin-top: -50%;
+    margin-left: 37%;
+    width: 80px;
+    height: 80px;
+    filter: invert(.5) sepia(1) saturate(5) hue-rotate(170deg);
+}
+
+.pin-s{
+  filter: invert(.2) sepia(1) saturate(30) hue-rotate(10deg) !important;
 }
 
 .charts {
@@ -34,7 +42,9 @@ body {
 }
 
 #dropdown {
-    margin-top: -20%;
+    border-top: 1px solid grey;
+    padding-top: 2em;
+    margin-top: -60%;
     float: right;
     padding-right: 40px;
     /* position: absolute; */
@@ -45,7 +55,7 @@ body {
     float: right;
     padding-right: 45px;
     /* position: absolute; */
-    margin-top:-70%;
+    margin-top:-75%;
 }
 
 .arc text {
@@ -111,7 +121,7 @@ select::-ms-expand {
     height: 40px;
     float: right;
     margin: 5px 0px;
-    padding: 0px 24px;
+    padding: 0px 24px 0px 10px;
     font-size: 14px;
     line-height: 1.75;
     color: #333;
@@ -123,7 +133,7 @@ select::-ms-expand {
 }
 
 .circ {
-  fill: #43a2ca
+  fill: #00b1ff
 }
 
 .circ:hover {
@@ -164,6 +174,7 @@ button:hover {
 }
 
 #right {
+  /* padding-top: 1em; */
   -webkit-box-shadow: -2px 0px 2px 0px rgba(170,170,170,1);
   -moz-box-shadow: -2px 0px 2px 0px rgba(170,170,170,1);
   box-shadow: -2px 0px 2px 0px rgba(170,170,170,1);
