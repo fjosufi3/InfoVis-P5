@@ -4,7 +4,7 @@
 }
 
 html {
-    background-color: #f9f1f1;
+    background-color: #eeeeee;
 }
 
 body {
@@ -21,6 +21,7 @@ body {
     position: relative;
 }
 
+
 #dropdown {
     float: right;
     padding: 20px;
@@ -29,10 +30,10 @@ body {
 }
 
 #basic_info {
-    clear: left;
-    padding: 40px;
-    width: 50%;
-    margin-top: 4%;
+    float: right;
+    padding-right: 45px;
+    /* position: absolute; */
+    margin-top:2%;
 }
 
 .arc text {
@@ -135,11 +136,15 @@ button {
     color: black;
     border: 1px solid black;
 }
-
-/* #map:hover {
-    cursor: grab;
+button:hover {
+    background: rgba(255,255,255, 1.0);
+    cursor: pointer;
 }
 
-#map:active {
-    cursor: grabbing;
-} */
+/* #map:hover {*/
+/*    cursor: grab;*/
+/*}*/
+
+/*#map:active {*/
+/*    cursor: grabbing;*/
+/*} */
