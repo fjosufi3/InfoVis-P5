@@ -225,7 +225,7 @@ d3.csv("data/colleges.csv", function(param_data) {
         d3.select("#control").text(param_data[index]["Control"]);
         d3.select("#region").text(param_data[index]["Region"]);
         d3.select("#locale").text(param_data[index]["Locale"]);
-        d3.select("#admission").text(param_data[index]["Admission Rate"]);
+        d3.select("#admission").text(Math.round(param_data[index]["Admission Rate"] * 100) + "%");
         d3.select("#act").text(param_data[index]["ACT Median"]);
         d3.select("#sat").text(param_data[index]["SAT Average"]);
         d3.select("#undergrad").text(param_data[index]["Undergrad Population"]);
