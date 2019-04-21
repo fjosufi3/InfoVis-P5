@@ -102,22 +102,24 @@ d3.csv("data/colleges.csv", function(param_data) {
                 .classed("circ", true)
                 // .style("fill", "#43a2ca")
                 .on("click", function(d, i) {
-                  d3.selectAll("circle")
-                    .classed("selected", function(c, j) {
-                      // console.log(c)
-                      console.log(c)
-                      return j == i;
-                    })
-                  // console.log(d);
-                  // console.log(i);
-                  center = {
-                    x: projection([d.longitude, d.latitude])[0],
-                    y:projection([d.longitude, d.latitude])[1]
-                  };
-                  s1 = center.x - 1;
-                  s2 = center.x + 1;
-                  transform = bbox(mapWidth, mapHeight, center);
-                  return svg.transition().duration(2000).call(zoom.transform, transform);
+                    create_basic_info(i);
+                    create_pie_chart_1(i);
+                    create_pie_chart_2(i);
+                    create_pie_chart_3(i);
+                    document.getElementById("colleges").selectedIndex = i;
+                    d3.select(".charts").style("display", "block");
+                    d3.selectAll("circle")
+                        .classed("selected", function(c, j) {
+                            return j === i;
+                        });
+                    center = {
+                        x: projection([d.longitude, d.latitude])[0],
+                        y:projection([d.longitude, d.latitude])[1]
+                    };
+                    s1 = center.x - 1;
+                    s2 = center.x + 1;
+                    transform = bbox(mapWidth, mapHeight, center);
+                    return svg.transition().duration(2000).call(zoom.transform, transform);
                 });
 
             // var svgBounds = svg.node().getBoundingClientRect();
