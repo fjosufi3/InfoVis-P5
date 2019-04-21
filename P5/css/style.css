@@ -109,10 +109,10 @@ select::-ms-expand {
     word-break: normal;
 }
 
-#map:hover {
+/* #map:hover {
     cursor: grab;
 }
 
 #map:active {
     cursor: grabbing;
-}
+} */

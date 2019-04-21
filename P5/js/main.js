@@ -11,19 +11,55 @@ d3.csv("data/colleges.csv", function(param_data) {
     function load_map() {
         var mapWidth = 1000;
         var mapHeight = 800;
+        var zooming = false;
         var projection = d3.geoAlbersUsa()
             .translate([mapWidth/2, mapHeight/2])
             .scale([1400]);
         var path = d3.geoPath()
             .projection(projection);
 
+        var zoom = d3.zoom()
+            .scaleExtent([1, 8])
+            .on('zoom', zoomed);
+        var currMapTrans = [0,0];
+        var currMapScale = 1;
+
+        // var brushOffset = geoPathGroupBounds.x - svgBounds.x;
+        // var brushXDomain = [brushOffset, geoPathGroupBounds.width + brushOffset];
+        // // 0 or top whichever is a larger number; bottom or height whichever is smaller
+        // var brushYDomain = [
+        //     (geoPathGroupBounds.top < 0 ? 0 : geoPathGroupBounds.top),
+        //     (geoPathGroupBounds.bottom < this.height ? geoPathGroupBounds.bottom : this.height),
+        // ];
+
+        var brush = d3.brush()
+            .extent([[0, 0], [mapWidth, mapHeight]])
+            .on("start", clear)
+            .on("end", brushend);
+
+        var dx,
+            dy,
+            x,
+            y;
+
+
         var svg = d3.select("#map")
             .append("svg")
             .attr("width", mapWidth)
             .attr("height", mapHeight)
-            .style("float", "left");
+            .style("float", "left")
 
         var g = svg.append("g");
+
+
+        d3.select("body").on("keydown", function () {
+            zooming = d3.event.ctrlKey || d3.event.metaKey;
+        });
+
+        d3.select("body").on("keyup", function () {
+            zooming = false;
+        });
+
 
         d3.json("data/us-states.json", function(json) {
             g.selectAll("path")
@@ -33,39 +69,103 @@ d3.csv("data/colleges.csv", function(param_data) {
                 .style("stroke", "fff")
                 .style("stroke-width","1")
                 .style("fill", "#a1d99b");
+
+            g.selectAll("circle")
+                .data(param_data)
+                .enter()
+                .append("circle")
+                .attr("cx", function (d) {
+                    if (projection([d.longitude, d.latitude])) {
+                        return projection([d.longitude, d.latitude])[0];
+                    }
+                })
+                .attr("cy", function (d) {
+                    if (projection([d.longitude, d.latitude])) {
+                        return projection([d.longitude, d.latitude])[1];
+                    }
+                })
+                .attr("r", 1)
+                .style("fill", "#43a2ca");
+
+                svg.append("g")
+                  .attr("class", "brush")
+                  .call(brush)
+
+            // var svgBounds = svg.node().getBoundingClientRect();
+            // var geoPathGroupBounds = g.node().getBoundingClientRect();
+            // var brushOffset = geoPathGroupBounds.x - svgBounds.x;
+            // var brushXDomain = [brushOffset, geoPathGroupBounds.width + brushOffset];
+            // console.log(brushOffset);
+            // console.log(brushXDomain);
+            // var brushYDomain = [
+            //     (geoPathGroupBounds.top < 0 ? 0 : geoPathGroupBounds.top),
+            //     (geoPathGroupBounds.bottom < mapHeight ? geoPathGroupBounds.bottom : mapHeight),
+            // ];
+            //
+            // brush
+            //   .extent[d3.scaleOrdinal().range(brushXDomain), d3.scaleOrdinal().range(brushYDomain)]
+            //
+            // console.log(brushYDomain);
+            // if (!zooming) {
+            //   d3.select("g")
+            //     .call(brush)
+            // }
         });
 
-        svg.selectAll("circle")
-            .data(param_data)
-            .enter()
-            .append("circle")
-            .attr("cx", function (d) {
-                if (projection([d.longitude, d.latitude])) {
-                    return projection([d.longitude, d.latitude])[0];
-                }
-            })
-            .attr("cy", function (d) {
-                if (projection([d.longitude, d.latitude])) {
-                    return projection([d.longitude, d.latitude])[1];
-                }
-            })
-            .attr("r", 1)
-            .style("fill", "#43a2ca");
 
-        const zoom = d3.zoom()
-            .scaleExtent([1, 8])
-            .on('zoom', zoomed);
 
-        svg.call(zoom);
+        // svg.call(zoom);
+
+
+        function brushend() {
+          var s = d3.event.selection,
+              dx = s[1][0] - s[0][0],
+              dy = s[1][1] - s[0][1],
+              x = (s[0][0] + s[1][0]) / 2,
+              y = (s[0][1] + s[1][1]) / 2;
+          // console.log(s);
+          // console.log(dx);
+          // console.log(dy);
+          // console.log(x);
+          // console.log(y);
+
+          console.log(currMapScale);
+          console.log(currMapTrans);
+
+          currMapScale = Math.max(1, Math.min(40, 0.9 / Math.max(dx / mapWidth, dy / mapHeight)));
+          currMapTrans = [(mapWidth / 2) - (currMapScale * x), (mapHeight / 2) - (currMapScale * y)];
+
+          console.log(currMapScale);
+          console.log(currMapTrans);
+
+          svg.transition()
+              .duration(750)
+              .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
+
+          svg.select(".brush")
+              .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
+
+
+        }
+
+        function clear() {
+          svg.transition()
+              .duration(750)
+              // .call( zoom.transform, d3.zoomIdentity.translate(0, 0).scale(1) ); // not in d3 v4
+              // .call( zoom.transform, d3.zoomIdentity );
+        }
 
         function zoomed() {
-            svg
-                .selectAll('path') // To prevent stroke width from scaling
-                .attr('transform', d3.event.transform);
+            // console.log(d3.event.transform);
 
-            svg
-                .selectAll('circle')
-                .attr('transform', d3.event.transform);
+
+              g
+                  .selectAll('path') // To prevent stroke width from scaling
+                  .attr('transform', d3.event.transform)
+              g
+                  .selectAll('circle')
+                  .attr('transform', d3.event.transform);
+
         }
     }
 
