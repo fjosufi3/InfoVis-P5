@@ -344,10 +344,62 @@ d3.csv("data/colleges.csv", function(param_data) {
                 create_pie_chart_2(value);
                 create_pie_chart_3(value);
 
+                var mapWidth = 1050;
+                var mapHeight = 800
+
+                d3.selectAll("circle")
+                  .classed("selected", function(c, j) {
+                      value = parseInt(value, 10)
+                      var projection = d3.geoAlbersUsa()
+                          .translate([mapWidth/2, mapHeight/2])
+                          .scale([1400]);
+
+                      if (j === value) {
+                        center = {
+                            x: projection([c.longitude, c.latitude])[0],
+                            y: projection([c.longitude, c.latitude])[1]
+                        };
+                      }
+                      return j === value;
+                  });
+
+                  var zoom = d3.zoom()
+                      .scaleExtent([1, 10])
+                      .on('zoom', zoomed);
+
+                  bbox = function(W, H, center) {
+                      var k, x, y;
+                      k = 10;
+                      x = W / 2 - center.x * k;
+                      y = H / 2 - center.y * k;
+                      return d3.zoomIdentity.translate(x, y).scale(k);
+                  };
+
+                  s1 = center.x - 1;
+                  s2 = center.x + 1;
+                  transform = bbox(mapWidth, mapHeight, center);
+
+                  console.log(transform);
+
                 d3.select(".charts")
                     .style("display", "block");
 
-                window.scrollTo(0,document.body.scrollHeight);
+                function zoomed() {
+                      g = d3.select("#map svg").select("g");
+                      g
+                          .selectAll('path') // To prevent stroke width from scaling
+                          .attr('transform', d3.event.transform)
+                      g
+                          .selectAll('circle')
+                          .attr('transform', d3.event.transform);
+
+                }
+
+                d3.select("#map svg").transition().duration(2000).call(zoom.transform, transform);
+
+                setTimeout(function() {window.scrollTo(0,document.body.scrollHeight);}, 3000)
+
+
 
             });
     }
