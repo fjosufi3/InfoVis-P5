@@ -18,8 +18,16 @@ d3.csv("data/colleges.csv", function(param_data) {
         var path = d3.geoPath()
             .projection(projection);
 
+        bbox = function(W, H, center) {
+            var k, x, y;
+            k = 10;
+            x = W / 2 - center.x * k;
+            y = H / 2 - center.y * k;
+            return d3.zoomIdentity.translate(x, y).scale(k);
+        };
+
         var zoom = d3.zoom()
-            .scaleExtent([1, 8])
+            .scaleExtent([1, 10])
             .on('zoom', zoomed);
         var currMapTrans = [0,0];
         var currMapScale = 1;
@@ -37,10 +45,10 @@ d3.csv("data/colleges.csv", function(param_data) {
             .on("start", clear)
             // .on("end", brushend);
 
-        var dx,
-            dy,
-            x,
-            y;
+        // var dx,
+        //     dy,
+        //     x,
+        //     y;
 
 
         var svg = d3.select("#map")
@@ -79,6 +87,7 @@ d3.csv("data/colleges.csv", function(param_data) {
                 .data(param_data)
                 .enter()
                 .append("circle")
+                .attr("id",function(d,i) {return i;} )
                 .attr("cx", function (d) {
                     if (projection([d.longitude, d.latitude])) {
                         return projection([d.longitude, d.latitude])[0];
@@ -90,8 +99,19 @@ d3.csv("data/colleges.csv", function(param_data) {
                     }
                 })
                 .attr("r", 1)
-                .style("fill", "#43a2ca");
-
+                .style("fill", "#43a2ca")
+                .on("click", function(d, i) {
+                  console.log(d);
+                  console.log(i);
+                  center = {
+                    x: projection([d.longitude, d.latitude])[0],
+                    y:projection([d.longitude, d.latitude])[1]
+                  };
+                  s1 = center.x - 1;
+                  s2 = center.x + 1;
+                  transform = bbox(mapWidth, mapHeight, center);
+                  return svg.transition().duration(2000).call(zoom.transform, transform);
+                });
 
             // var svgBounds = svg.node().getBoundingClientRect();
             // var geoPathGroupBounds = g.node().getBoundingClientRect();
@@ -116,7 +136,7 @@ d3.csv("data/colleges.csv", function(param_data) {
 
 
 
-        // svg.call(zoom);
+        svg.call(zoom);
 
 
         // function brushend() {
@@ -156,7 +176,6 @@ d3.csv("data/colleges.csv", function(param_data) {
         function clear() {
           svg.transition()
               .duration(750)
-              // .call( zoom.transform, d3.zoomIdentity.translate(0, 0).scale(1) ); // not in d3 v4
               // .call( zoom.transform, d3.zoomIdentity );
         }
 
