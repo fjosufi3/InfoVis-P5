@@ -32,7 +32,38 @@ input {
     width: 80px;
     height: 80px;
     filter: invert(.5) sepia(1) saturate(5) hue-rotate(170deg);
+    cursor: pointer;
 }
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #e8e8e8;
+  color: #000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  -webkit-box-shadow: -1px 2px 5px 0px rgba(158,158,158,1);
+  -moz-box-shadow: -1px 2px 5px 0px rgba(158,158,158,1);
+  box-shadow: -1px 2px 5px 0px rgba(158,158,158,1);
+}
+#tool {
+  margin-top: -30%;
+}
+
+.tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 30%;
+  left: 100%; /* To the right of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #e8e8e8;
+
+}
+
 
 .pin-s{
     filter: invert(.2) sepia(1) saturate(30) hue-rotate(10deg) !important;
@@ -128,6 +159,7 @@ select::-ms-expand {
 
 .selected {
     fill: red !important;
+    r: 1.5;
 }
 
 #reset {

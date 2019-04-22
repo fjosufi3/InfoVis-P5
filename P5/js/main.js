@@ -288,7 +288,7 @@ d3.csv("data/colleges.csv", function(param_data) {
                   s2 = center.x + 1;
                   transform = bbox(mapWidth, mapHeight, center);
 
-                  console.log(transform);
+                  // console.log(transform);
 
                 d3.select(".charts")
                     .style("display", "block");
@@ -445,6 +445,81 @@ d3.csv("data/colleges.csv", function(param_data) {
           });
     }
 
+    function randomCollege() {
+      d3.select("#pin")
+          .on("mouseover", function() {
+              d3.select(".tooltiptext")
+                .style("visibility", "visible");
+          })
+          .on("mouseout", function() {
+              d3.select(".tooltiptext")
+                .style("visibility", "hidden");
+          })
+          .on("click", function() {
+              var rand = Math.floor(Math.random() * (1214 - 1 + 1)) + 1;
+              create_basic_info(rand);
+              create_pie_chart_1(rand);
+              create_pie_chart_2(rand);
+              create_pie_chart_3(rand);
+              console.log(rand);
+              document.getElementById("colleges").selectedIndex = rand;
+              var mapWidth = 1050;
+              var mapHeight = 800
+              d3.selectAll("circle")
+                .classed("selected", function(c, j) {
+                    var projection = d3.geoAlbersUsa()
+                        .translate([mapWidth/2, mapHeight/2])
+                        .scale([1400]);
+
+                    if (j === rand) {
+                      center = {
+                          x: projection([c.longitude, c.latitude])[0],
+                          y: projection([c.longitude, c.latitude])[1]
+                      };
+                    }
+                    return j === rand;
+                });
+
+                var zoom = d3.zoom()
+                    .scaleExtent([1, 10])
+                    .on('zoom', zoomed);
+
+                bbox = function(W, H, center) {
+                    var k, x, y;
+                    k = 10;
+                    x = W / 2 - center.x * k;
+                    y = H / 2 - center.y * k;
+                    return d3.zoomIdentity.translate(x, y).scale(k);
+                };
+
+                s1 = center.x - 1;
+                s2 = center.x + 1;
+                transform = bbox(mapWidth, mapHeight, center);
+
+                // console.log(transform);
+
+                d3.select(".charts")
+                    .style("display", "block");
+
+                function zoomed() {
+                      g = d3.select("#map svg").select("g");
+                      g
+                          .selectAll('path') // To prevent stroke width from scaling
+                          .attr('transform', d3.event.transform)
+                      g
+                          .selectAll('circle')
+                          .attr('transform', d3.event.transform);
+
+                }
+
+                d3.select("#map svg").transition().duration(2000).call(zoom.transform, transform);
+                d3.select("#pin")
+                  .classed("pin-s", true);
+
+                setTimeout(function() {window.scrollTo(0,document.body.scrollHeight);}, 3000)
+          });
+    }
+
     /*
      * Animation to hide charts
      */
@@ -473,4 +548,5 @@ d3.csv("data/colleges.csv", function(param_data) {
     load_map();
     filter();
     reset_filter();
+    randomCollege();
 });
