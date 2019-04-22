@@ -18,6 +18,10 @@ body {
     margin: 0;
 }
 
+input {
+    float:left;
+}
+
 #pin {
     margin-top: -50%;
     margin-left: 37%;
@@ -148,8 +152,55 @@ select::-ms-expand {
 #reset {
     position: absolute;
     left: 15px;
+    top: 20px;
+}
+
+#filter_criteria {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    height: 30px;
+    float: right;
+    margin: 5px 0px;
+    padding: 0px 12px 0px 10px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #333;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+    position: absolute;
+    left: 350px;
     top: 15px;
 }
+
+#cutoff {
+    position: absolute;
+    left: 620px;
+    top: 20px;
+    height: 25px;
+    font-size: 14px;
+    text-align: center;
+}
+
+#filter {
+    position: absolute;
+    left: 800px;
+    top: 20px;
+}
+
+#reset_filter {
+    position: absolute;
+    left: 900px;
+    top: 20px;
+    width: 100px;
+}
+
 button {
     width: 80px;
     height: 30px;

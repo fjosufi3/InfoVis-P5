@@ -32,25 +32,6 @@ d3.csv("data/colleges.csv", function(param_data) {
         var currMapTrans = [0,0];
         var currMapScale = 1;
 
-        // var brushOffset = geoPathGroupBounds.x - svgBounds.x;
-        // var brushXDomain = [brushOffset, geoPathGroupBounds.width + brushOffset];
-        // // 0 or top whichever is a larger number; bottom or height whichever is smaller
-        // var brushYDomain = [
-        //     (geoPathGroupBounds.top < 0 ? 0 : geoPathGroupBounds.top),
-        //     (geoPathGroupBounds.bottom < this.height ? geoPathGroupBounds.bottom : this.height),
-        // ];
-
-        // var brush = d3.brush()
-        //     .extent([[0, 0], [mapWidth, mapHeight]])
-        //     .on("start", clear)
-            // .on("end", brushend);
-
-        // var dx,
-        //     dy,
-        //     x,
-        //     y;
-
-
         var svg = d3.select("#map")
             .append("svg")
             .attr("width", mapWidth)
@@ -78,10 +59,6 @@ d3.csv("data/colleges.csv", function(param_data) {
                 .style("stroke", "fff")
                 .style("stroke-width","1")
                 .style("fill", "#a1d99b");
-
-
-            // d3.select("g")
-            //   .call(brush)
 
             g.selectAll("circle")
                 .data(param_data)
@@ -120,74 +97,14 @@ d3.csv("data/colleges.csv", function(param_data) {
                     s2 = center.x + 1;
                     transform = bbox(mapWidth, mapHeight, center);
                     d3.select("#pin")
-                      .classed("pin-s", true)
-                    return svg.transition().duration(2000).call(zoom.transform, transform);
+                      .classed("pin-s", true);
+                    svg.transition().duration(2000).call(zoom.transform, transform);
+                    setTimeout(function() {window.scrollTo(0,document.body.scrollHeight);}, 3000)
                 });
-
-            // var svgBounds = svg.node().getBoundingClientRect();
-            // var geoPathGroupBounds = g.node().getBoundingClientRect();
-            // var brushOffset = geoPathGroupBounds.x - svgBounds.x;
-            // var brushXDomain = [brushOffset, geoPathGroupBounds.width + brushOffset];
-            // console.log(brushOffset);
-            // console.log(brushXDomain);
-            // var brushYDomain = [
-            //     (geoPathGroupBounds.top < 0 ? 0 : geoPathGroupBounds.top),
-            //     (geoPathGroupBounds.bottom < mapHeight ? geoPathGroupBounds.bottom : mapHeight),
-            // ];
-            //
-            // brush
-            //   .extent[d3.scaleOrdinal().range(brushXDomain), d3.scaleOrdinal().range(brushYDomain)]
-            //
-            // console.log(brushYDomain);
-            // if (!zooming) {
-            //   d3.select("g")
-            //     .call(brush)
-            // }
         });
 
 
         svg.call(zoom);
-
-        // svg.on("dblclick.zoom", function() {
-        //     svg.transition()
-        //         .duration(750)
-        //         .call( zoom.transform, d3.zoomIdentity);
-        // })
-
-
-        // function brushend() {
-        //   var s = d3.event.selection,
-        //       dx = s[1][0] - s[0][0],
-        //       dy = s[1][1] - s[0][1],
-        //       x = (s[0][0] + s[1][0]) / 2,
-        //       y = (s[0][1] + s[1][1]) / 2;
-        //   // console.log(s);
-        //   // console.log(dx);
-        //   // console.log(dy);
-        //   // console.log(x);
-        //   // console.log(y);
-        //
-        //   console.log(currMapScale);
-        //   console.log(currMapTrans);
-        //
-        //   currMapScale = Math.max(1, Math.min(40, 0.9 / Math.max(dx / mapWidth, dy / mapHeight)));
-        //   currMapTrans = [(mapWidth / 2) - (currMapScale * x), (mapHeight / 2) - (currMapScale * y)];
-        //
-        //   console.log(currMapScale);
-        //   console.log(currMapTrans);
-        //
-        //   svg.transition()
-        //       .duration(750)
-        //       .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
-        //
-        //   svg.select(".brush")
-        //       .call(zoom.transform, d3.zoomIdentity.translate(currMapTrans[0], currMapTrans[1]).scale(currMapScale));
-        //
-        //
-        // }
-        //
-        // console.log(currMapScale);
-        // console.log(currMapTrans);
 
         function clear() {
           svg.transition()
@@ -200,19 +117,12 @@ d3.csv("data/colleges.csv", function(param_data) {
         });
 
         function zoomed() {
-            // console.log(d3.event.transform);
-              // currMapScale = d3.event.transform.k;
-              // console.log(currMapScale);
               g
                   .selectAll('path') // To prevent stroke width from scaling
-                  .attr('transform', d3.event.transform)
+                  .attr('transform', d3.event.transform);
               g
                   .selectAll('circle')
                   .attr('transform', d3.event.transform);
-
-              // g
-              //     .selectAll(".brush")
-              //     .attr('transform', d3.event.transform);
         }
     }
 
@@ -321,7 +231,7 @@ d3.csv("data/colleges.csv", function(param_data) {
             .attr("id", "colleges")
             .attr("class", "select");
 
-        d3.select("select")
+        d3.select("#colleges")
             .append("option")
             .attr("value", "")
             .attr("disabled", true)
@@ -399,7 +309,7 @@ d3.csv("data/colleges.csv", function(param_data) {
 
                 d3.select("#map svg").transition().duration(2000).call(zoom.transform, transform);
                 d3.select("#pin")
-                  .classed("pin-s", true)
+                  .classed("pin-s", true);
                   
                 setTimeout(function() {window.scrollTo(0,document.body.scrollHeight);}, 3000)
 
@@ -508,7 +418,6 @@ d3.csv("data/colleges.csv", function(param_data) {
 
     // Functions called to initiate vis, init displays the default vis and dynamic selection controls
     // updating the charts based on different selections
-    //init();
     dynamic_selection();
     load_map();
 });
