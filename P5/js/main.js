@@ -405,7 +405,13 @@ d3.csv("data/colleges.csv", function(param_data) {
                       .transition()
                       .duration(function() { return Math.random() * 500})
                       .delay(function() {return Math.random() * 500})
-                      .attr("class", "circ");
+                      .attr("class", function() {
+                          if (this.classList.contains("selected")) {
+                            return "selected";
+                          } else {
+                            return "circ";
+                          }
+                      });
 
                     var filter_selection = document.getElementById("filter_criteria");
                     var accessor = filter_selection.options[filter_selection.selectedIndex].value;
@@ -416,7 +422,14 @@ d3.csv("data/colleges.csv", function(param_data) {
                         .transition()
                         .duration(function() { return Math.random() * 500 })
                         .delay(function() { return Math.random() * 500})
-                        .attr("class", "filtered");
+                        .attr("class", function() {
+                            if (this.classList.contains("selected")) {
+                              return "selected";
+                            } else {
+                              return "filtered";
+                            }
+                        });
+
                 }
             });
     }

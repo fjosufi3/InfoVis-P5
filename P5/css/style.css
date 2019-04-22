@@ -168,7 +168,8 @@ select::-ms-expand {
     left: 620px;
     top: 20px;
     height: 27px;
-    font-size: 14px;
+    width:150px;
+    font-size: 12px;
     text-align: center;
 }
 
