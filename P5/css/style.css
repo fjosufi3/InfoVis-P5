@@ -19,7 +19,11 @@ body {
 }
 
 input {
-    float:left;
+    float: left;
+    border: none;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
+    box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
 }
 
 #pin {
@@ -35,6 +39,7 @@ input {
 }
 
 .charts {
+    margin-left: 3em;
     background: white;
     position: relative;
     display: none;
@@ -106,7 +111,7 @@ select::-ms-expand {
     font-size: 14px;
     line-height: 1.75;
     color: #333;
-    background-color: #ffffff;
+    background-color: #eeeeee;
     background-image: none;
     border: 1px solid #cccccc;
     -ms-word-break: normal;
@@ -132,6 +137,9 @@ select::-ms-expand {
 }
 
 #filter_criteria {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
+    box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -159,7 +167,7 @@ select::-ms-expand {
     position: absolute;
     left: 620px;
     top: 20px;
-    height: 25px;
+    height: 27px;
     font-size: 14px;
     text-align: center;
 }
@@ -182,9 +190,12 @@ button {
     height: 30px;
     font-size: 14px;
     font-weight: bold;
-    background: rgba(255,255,255, .5);
+    background: rgba(230,230,230, .7);
     color: black;
     border: 1px solid black;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
+    box-shadow: 0px 2px 5px 0px rgba(158,158,158,1);
 }
 button:hover {
     background: rgba(255,255,255, 1.0);
@@ -219,3 +230,4 @@ button:hover {
 
 button:focus { outline:0; }
 select:focus { outline: 0; }
+input:focus { outline: 0;}

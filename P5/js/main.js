@@ -307,7 +307,7 @@ d3.csv("data/colleges.csv", function(param_data) {
                 d3.select("#map svg").transition().duration(2000).call(zoom.transform, transform);
                 d3.select("#pin")
                   .classed("pin-s", true);
-                  
+
                 setTimeout(function() {window.scrollTo(0,document.body.scrollHeight);}, 3000)
 
 
@@ -401,6 +401,12 @@ d3.csv("data/colleges.csv", function(param_data) {
                 if (isNaN(cutoff)) {
                     alert("Please enter a valid numerical value");
                 } else {
+                  d3.selectAll("circle")
+                      .transition()
+                      .duration(function() { return Math.random() * 500})
+                      .delay(function() {return Math.random() * 500})
+                      .attr("class", "circ");
+
                     var filter_selection = document.getElementById("filter_criteria");
                     var accessor = filter_selection.options[filter_selection.selectedIndex].value;
                     d3.selectAll("circle")
@@ -413,15 +419,17 @@ d3.csv("data/colleges.csv", function(param_data) {
                         .attr("class", "filtered");
                 }
             });
+    }
 
-        d3.select("#reset_filter")
-            .on("click", function() {
-                d3.selectAll("circle")
-                    .transition()
-                    .duration(function() { return Math.random() * 500})
-                    .delay(function() {return Math.random() * 500})
-                    .attr("class", "circ");
-            });
+    function reset_filter() {
+      d3.select("#reset_filter")
+          .on("click", function() {
+              d3.selectAll(".filtered")
+                  .transition()
+                  .duration(function() { return Math.random() * 500})
+                  .delay(function() {return Math.random() * 500})
+                  .attr("class", "circ");
+          });
     }
 
     /*
@@ -451,4 +459,5 @@ d3.csv("data/colleges.csv", function(param_data) {
     dynamic_selection();
     load_map();
     filter();
+    reset_filter();
 });
