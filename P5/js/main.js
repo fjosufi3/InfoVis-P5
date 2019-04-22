@@ -358,6 +358,8 @@ d3.csv("data/colleges.csv", function(param_data) {
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
         svg.append("text")
+            .style("font-weight", "bold")
+            .style("font-size", 15)
             .attr("class", "title")
             .attr("x", width/2 + margin.right)
             .attr("y", 0 - (margin.top / 2))
