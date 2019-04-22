@@ -2,7 +2,6 @@
  * Created by Josufi and Wang on 4/15/19.
  */
 
-
 d3.csv("data/colleges.csv", function(param_data) {
 
     /*
@@ -36,7 +35,7 @@ d3.csv("data/colleges.csv", function(param_data) {
             .append("svg")
             .attr("width", mapWidth)
             .attr("height", mapHeight)
-            .style("float", "left")
+            .style("float", "left");
 
         var g = svg.append("g");
 
@@ -77,7 +76,6 @@ d3.csv("data/colleges.csv", function(param_data) {
                 })
                 .attr("r", 1)
                 .classed("circ", true)
-                // .style("fill", "#43a2ca")
                 .on("click", function(d, i) {
                     create_basic_info(i);
                     create_pie_chart_1(i);
@@ -109,7 +107,6 @@ d3.csv("data/colleges.csv", function(param_data) {
         function clear() {
           svg.transition()
               .duration(750)
-              // .call( zoom.transform, d3.zoomIdentity );
         }
 
         d3.select("#reset").on("click", function() {
@@ -395,6 +392,39 @@ d3.csv("data/colleges.csv", function(param_data) {
     }
 
     /*
+     * Handles filtering behavior for the colleges on the map
+     */
+    function filter() {
+        d3.select("#filter")
+            .on("click", function() {
+                var cutoff = parseFloat(document.getElementById("cutoff").value);
+                if (isNaN(cutoff)) {
+                    alert("Please enter a valid numerical value");
+                } else {
+                    var filter_selection = document.getElementById("filter_criteria");
+                    var accessor = filter_selection.options[filter_selection.selectedIndex].value;
+                    d3.selectAll("circle")
+                        .filter(function(d) {
+                            return d[accessor] < cutoff;
+                        })
+                        .transition()
+                        .duration(function() { return Math.random() * 500 })
+                        .delay(function() { return Math.random() * 500})
+                        .attr("class", "filtered");
+                }
+            });
+
+        d3.select("#reset_filter")
+            .on("click", function() {
+                d3.selectAll("circle")
+                    .transition()
+                    .duration(function() { return Math.random() * 500})
+                    .delay(function() {return Math.random() * 500})
+                    .attr("class", "circ");
+            });
+    }
+
+    /*
      * Animation to hide charts
      */
     function hide(id) {
@@ -420,4 +450,5 @@ d3.csv("data/colleges.csv", function(param_data) {
     // updating the charts based on different selections
     dynamic_selection();
     load_map();
+    filter();
 });
