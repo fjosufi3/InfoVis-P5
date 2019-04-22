@@ -1,21 +1,5 @@
-Dropdown: List of colleges
+Colleges: A Visual Encoding
 
-Basic Stats: Control, Region, Locale, Admission Rate, ACT, SAT, Undergrad Population
+This project was created as part of our final project in CS 4460. It uses D3 to visualize a dataset of colleges with a number of attributes.
 
-
-Pie Chart 1: % White, % Black, % Hispanic, % Asian, % American Indian, % Pacific Islander, % Biracial, % Nonresident Aliens
-
-Pie Chart 2: % Part-time Undergrads, % Full-time Undergrads (1 - % Part-time)
-
-Pie Chart 3: Number of Unemployed 8 years after entry, Number of Employed 8 years after entry
-
-
-
-Bar Chart 1: Average Cost, Expenditure Per Student, Average Family Income
-
-Bar Chart 2: Median Debt, Median Debt on Graduation, Median Debt on Withdrawal
-
-Bar Chart 3: Mean Earnings 8 years after Entry, Median Earnings 8 years After Entry
-
-
-Map that links with region
+There is a general map view with a set of all colleges displayed as data points. Users are able to interact with the map, along with various other visualization features to explore the dataset.
